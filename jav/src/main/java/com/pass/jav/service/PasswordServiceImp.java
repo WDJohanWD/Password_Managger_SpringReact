@@ -15,4 +15,8 @@ public class PasswordServiceImp implements PasswordService {
     public List<Password> obtenerTodosLosPasswords() {
         return passwordRepository.findAll();
     }
+
+    public Password guardarPassword(Password password) {
+        return passwordRepository.save(password);
+    }
 }
