@@ -1,20 +1,33 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "./App.js";
-import Layout from "./Layout.js";
-import Login from "./Login.js";
-import Register from "./Register.js";
+import Login from "./Login/Login";
 
-// Definir tus rutas
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,  // Usa Layout como el contenedor principal
-    children: [
-      { path: "/", element: <App /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-    ],
-  },
-]);
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import Home from "./Home";
+import PasswordManager from "./PasswordManager";
 
-export default router;  // Exporta el router para usarlo en index.js
+// Componente para proteger rutas
+const ProtectedRoute = ({ isAuthenticated, children }) => {
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+const router = (handleLoginSuccess, isAuthenticated) =>
+  createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />, // Ruta pública
+    },
+    {
+      path: "/login",
+      element: <Login onLoginSuccess={handleLoginSuccess} />, // Ruta pública
+    },
+    {
+      path: "/password-manager",
+      element: (
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <PasswordManager />
+        </ProtectedRoute>
+      ),
+    },
+  ]);
+
+export default router;

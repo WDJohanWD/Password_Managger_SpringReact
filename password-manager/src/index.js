@@ -1,11 +1,10 @@
-import { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
-import './index.css';
-import { RouterProvider } from 'react-router-dom';  // Importa RouterProvider
-import router from './Router'; // Importa el router que has definido
+import "./index.css";
+import App from "./App";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />  {/* Solo utiliza RouterProvider */}
-  </StrictMode>
+  <React.StrictMode>
+    <App /> {/* App manejará el enrutador */}
+  </React.StrictMode>
 );

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pass.jav.domain.AppUsers;
+import com.pass.jav.dto.LoginRequestDTO;
 import com.pass.jav.service.UsersService;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -30,13 +32,15 @@ public class AuthController {
     
 
     @PostMapping("/login")
-     public ResponseEntity<?> loginUser(@RequestBody String user, @RequestBody String password) {
-        
-
-        if (usersService.comprobarUsuario(user, password)) {
+    public ResponseEntity<?> loginUser(@RequestBody AppUsers user) {
+        String username = user.getUsername();
+        String password = user.getEncryptedPassword();
+    
+        if (usersService.comprobarUsuario(username, password)) {
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+    
 }
