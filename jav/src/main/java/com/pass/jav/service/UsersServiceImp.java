@@ -1,5 +1,8 @@
 package com.pass.jav.service;
 
+import java.util.Optional;
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,12 @@ public class UsersServiceImp implements UsersService {
 
     @Override
     public AppUsers guardar(AppUsers user) {
+        List<AppUsers> users = usersRepository.findAll();
+        for (AppUsers u : users) {
+            if (u.getUsername().equals(user.getUsername())) {
+                return null;
+            }
+        }
         return usersRepository.save(user);
     }
 
@@ -22,4 +31,21 @@ public class UsersServiceImp implements UsersService {
         usersRepository.delete(user);
     }
 
+    @Override
+    public Optional <AppUsers> buscarPorNombre(String nombre) {
+        Optional <AppUsers> user = Optional.ofNullable(usersRepository.findByUsername(nombre));
+        return user;
+    }
+
+    @Override
+    public boolean comprobarUsuario(String nombre, String password) {
+        Optional <AppUsers> user = Optional.ofNullable(usersRepository.findByUsername(nombre));
+        if (user.isPresent() && user.get().getEncryptedPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+   
 }
