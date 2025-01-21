@@ -25,9 +25,9 @@ public class AuthController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping()
+    @GetMapping("/login")
     public String getMethodName() {
-        return new String();
+        return usersService.obtenerTodos().toString();
     }
     
 

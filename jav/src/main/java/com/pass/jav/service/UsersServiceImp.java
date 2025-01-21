@@ -47,5 +47,10 @@ public class UsersServiceImp implements UsersService {
         }
     }
 
+    @Override
+    public List<AppUsers> obtenerTodos(){
+        return usersRepository.findAll();
+    }
+
    
 }

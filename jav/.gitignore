@@ -1,6 +1,6 @@
 HELP.md
 target/
-password_manaager.mv.db
+password_manager.mv.db
 password_manager.trace.db
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
