@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "username")
+@EqualsAndHashCode(of = "id")
 @Entity
 public class AppUsers {
 

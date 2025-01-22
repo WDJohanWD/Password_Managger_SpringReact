@@ -3,7 +3,7 @@ import axios from 'axios';
 export const login = async (username, password) => {
     try {
         // Realiza la solicitud POST al backend con los datos correctos
-        const response = await axios.post("http://localhost:8080/api/auth/login", {
+        const response = await axios.post("http://localhost:9000/api/auth/login", {
             username: username,
             encryptedPassword: password // Asegúrate de usar el nombre correcto según tu backend
         });

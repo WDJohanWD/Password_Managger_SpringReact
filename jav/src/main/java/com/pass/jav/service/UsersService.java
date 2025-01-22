@@ -18,6 +18,9 @@ public interface UsersService {
     boolean comprobarUsuario(String nombre, String password);
 
     List<AppUsers> obtenerTodos();
+
+
+    
     
 
     
