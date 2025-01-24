@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "./api.js"; // Importa las funciones de conexión
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -6,6 +7,8 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,11 +16,13 @@ function Login() {
         try {
             const result = await loginUser(username, password);
             console.log("Login successful", result);
-            // Aquí puedes redirigir al usuario o actualizar el estado de la app
+            setError(null);
+            navigate("/password-manager"); // Redirige al usuario a /dashboard
         } catch (err) {
             setError(err.message);
         }
     };
+
 
     return (
         <div className="container mt-5">

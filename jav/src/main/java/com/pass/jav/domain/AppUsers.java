@@ -20,11 +20,14 @@ public class AppUsers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String encryptedPassword;
+    private String password;
 
-    public AppUsers(String username, String encryptedPassword) {
+    public AppUsers(String username, String password) {
         this.username = username;
-        this.encryptedPassword = encryptedPassword;
+        this.password = password;
     }
+
+
+
 
 }

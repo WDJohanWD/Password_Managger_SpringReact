@@ -3,7 +3,7 @@ package com.pass.jav.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;  // Importar BCryptPasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; // Importar BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.*;
 
 import com.pass.jav.domain.AppUsers;
@@ -12,7 +12,6 @@ import com.pass.jav.service.UsersService;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -21,10 +20,20 @@ public class AuthController {
     // Instancia manual de BCryptPasswordEncoder
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @GetMapping("/login")
+    public String login() {
+        return usersService.obtenerTodos().toString();
+
+    }
+
+    // AuthController.java
+    // AuthController.java
+    // AuthController.java
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody AppUsers user) {
         String username = user.getUsername();
-        String password = user.getEncryptedPassword(); // Esto debe ser la contraseña en texto claro
+        String password = user.getPassword(); // Cambié 'encryptedPassword' a 'password' para que coincida con el
+                                              // frontend
 
         if (usersService.comprobarUsuario(username, password)) {
             return ResponseEntity.ok(new ResponseMessage("Login successful"));
@@ -36,8 +45,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registrarUsuario(@RequestBody AppUsers user) {
         // Encriptar la contraseña antes de guardar
-        String encryptedPassword = passwordEncoder.encode(user.getEncryptedPassword());
-        user.setEncryptedPassword(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
 
         AppUsers nuevoUsuario = usersService.guardar(user);
         if (nuevoUsuario == null) {

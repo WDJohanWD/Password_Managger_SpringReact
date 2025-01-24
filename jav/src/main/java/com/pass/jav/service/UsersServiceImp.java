@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.List;
 
 @Service
-public class UsersServiceImp implements UsersService { 
-    
+public class UsersServiceImp implements UsersService {
+
     @Autowired
     private UsersRepository usersRepository;
 
@@ -21,25 +21,33 @@ public class UsersServiceImp implements UsersService {
 
     @Override
     public AppUsers guardar(AppUsers user) {
-        // Verificar si el usuario ya existe
+        
         AppUsers existingUser = usersRepository.findByUsername(user.getUsername());
         if (existingUser != null) {
-            return null;  // El usuario ya existe
+            return null; 
         }
-        
-        // Encriptar la contraseña antes de guardar
-        String encryptedPassword = passwordEncoder.encode(user.getEncryptedPassword());
-        user.setEncryptedPassword(encryptedPassword);
+
+       
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        System.out.println("Hash generado para la contraseña: " + encryptedPassword);
+
+        user.setPassword(encryptedPassword);
         return usersRepository.save(user);
     }
+
 
     @Override
     public boolean comprobarUsuario(String username, String password) {
         AppUsers user = usersRepository.findByUsername(username);
         if (user == null) {
-            return false;  // Usuario no encontrado
+            return false; 
         }
-        return passwordEncoder.matches(password, user.getEncryptedPassword());
+
+        String storedHash = user.getPassword().trim(); 
+        boolean matches = passwordEncoder.matches(password.trim(), storedHash.trim());
+        System.out.println("Contraseña almacenada (hash): " + storedHash);
+        System.out.println("¿Contraseña coincide?: " + matches);
+        return matches;
     }
 
     @Override
@@ -53,7 +61,7 @@ public class UsersServiceImp implements UsersService {
     }
 
     @Override
-    public List<AppUsers> obtenerTodos(){
+    public List<AppUsers> obtenerTodos() {
         return usersRepository.findAll();
     }
 }
