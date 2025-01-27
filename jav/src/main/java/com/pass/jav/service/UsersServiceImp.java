@@ -21,13 +21,12 @@ public class UsersServiceImp implements UsersService {
 
     @Override
     public AppUsers guardar(AppUsers user) {
-        
         AppUsers existingUser = usersRepository.findByUsername(user.getUsername());
         if (existingUser != null) {
-            return null; 
+            return null;
         }
 
-       
+        // Encripta aquí
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         System.out.println("Hash generado para la contraseña: " + encryptedPassword);
 
@@ -35,15 +34,14 @@ public class UsersServiceImp implements UsersService {
         return usersRepository.save(user);
     }
 
-
     @Override
     public boolean comprobarUsuario(String username, String password) {
         AppUsers user = usersRepository.findByUsername(username);
         if (user == null) {
-            return false; 
+            return false;
         }
 
-        String storedHash = user.getPassword().trim(); 
+        String storedHash = user.getPassword().trim();
         boolean matches = passwordEncoder.matches(password.trim(), storedHash.trim());
         System.out.println("Contraseña almacenada (hash): " + storedHash);
         System.out.println("¿Contraseña coincide?: " + matches);
