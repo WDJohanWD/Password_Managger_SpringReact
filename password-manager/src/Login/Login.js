@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "./api.js"; // Importa las funciones de conexión
+import { useNavigate } from "react-router-dom"; // Asegúrate de importar esto
+import { loginUser } from "./api.js"; // Asegúrate de que la función esté correctamente importada
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Login() {
+function Login({ onLoginSuccess }) { // Recibe la función como prop
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const result = await loginUser(username, password);
             console.log("Login successful", result);
             setError(null);
-            navigate("/password-manager"); // Redirige al usuario a /dashboard
+
+            onLoginSuccess(); // Actualiza el estado de autenticación
+            navigate("/password-manager"); // Redirige al usuario
         } catch (err) {
+            console.error(err.message);
             setError(err.message);
         }
     };
-
 
     return (
         <div className="container mt-5">

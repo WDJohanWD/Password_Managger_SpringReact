@@ -15,15 +15,15 @@ const router = (handleLoginSuccess, isAuthenticated) =>
   createBrowserRouter([
     {
       path: "/",
-      element: <Home />, // Ruta pública
+      element: <Home />,
     },
     {
       path: "/login",
-      element: <Login onLoginSuccess={handleLoginSuccess} />, // Ruta pública
+      element: <Login onLoginSuccess={handleLoginSuccess} />, 
     },
     {
       path: "/register",
-      element: <Register />, // Ruta pública
+      element: <Register />,
     },
     {
       path: "/password-manager",

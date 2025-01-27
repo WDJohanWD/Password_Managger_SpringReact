@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate
 import { registerUser } from "./api";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -6,13 +7,15 @@ function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // Hook para redirección
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const result = await registerUser(username, password);
+            await registerUser(username, password);
             setMessage("User registered successfully!");
+            navigate("/login"); // Redirigir a login después del registro
         } catch (err) {
             setMessage("Error: " + err.message);
         }

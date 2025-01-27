@@ -38,7 +38,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registrarUsuario(@RequestBody AppUsers user) {
-        // NO encriptar aquí
         AppUsers nuevoUsuario = usersService.guardar(user);
         if (nuevoUsuario == null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage("Username already exists"));

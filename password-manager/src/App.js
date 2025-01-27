@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import router from "./Router"; // Importa el archivo del router
+import router from "./Router";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
+    setIsAuthenticated(true); // Actualiza el estado al autenticarte
   };
 
   return (
